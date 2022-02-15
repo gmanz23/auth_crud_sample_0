@@ -1,40 +1,51 @@
-import React, { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
- 
+import React, { useEffect, useState } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+
+import "bootstrap/dist/css/bootstrap.min.css";
  
 // We import all the components we need in our app
+import AuthService from "./services/auth.service";
+// import Login from "./components/login.component";
 import Login from "./components/login/login";
-import Dashboard from "./components/dashboard";
-import useToken from './components/app/useToken';
+import Posts from "./components/posts";
+// import Dashboard from "./components/dashboard";
+// import useToken from './components/app/useToken';
 
-// import Navbar from "./components/navbar";
-// import RecordList from "./components/recordList";
-// import Edit from "./components/edit";
-// import Create from "./components/create";
+import "./components/app/app.css";
+
+const App = () => {   
+
+    //const [currentUser, setCurrentUser] = useState();   
+
+    // useEffect(() => {
+    //     const user = AuthService.getCurrentUser();
+
+    //     if (user) { setCurrentUser(user); }
+        
+    // });
+
+    const user = AuthService.getCurrentUser();
+
+    // const logout = () => {                
+    //     AuthService.logout();
+    // }
 
 
-const App = () => {
-
-    const apiUrl = "http://localhost:5000/"
-
-    const { token, setToken } = useToken();
-
-    if(!token) {
-        return <Login setToken={setToken} />
+    if(!user) {
+        return <Login />
     }
 
     return (
         <div>            
-            <div className="wrapper">
-                <h1>BookFace</h1>
+            <div className="container mt-3">
                 <Routes>
-                    <Route exact path="/" element={<Dashboard />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/posts" element={<Posts />} />
+                    <Route exact path="/" element={<Navigate replace to="/posts" />} />
                 </Routes>
             </div>
         </div>
     );
-};
- 
+}; 
 export default App;
+
