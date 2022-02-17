@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Configuration
+## Server Configuration
 
 The following configuration is required to use this project. Server project is expecting "./config.env" file.
 
@@ -14,3 +14,8 @@ TOKEN_SECRET=3FkwGUGu3n4AZokmU1AfKVhyonjXek7qjtDm/6CYmgwZ78wAP+jJHWxGdqCaFtW+GxS
 
 
 Note: TOKEN_SECRET is the private key used for signing JWT. Feel free to use for testing or generate your own.
+
+
+## Cient Configuration
+
+Be sure to update the index.js file and make sure "window.$apiURL" is pointing to the expect base URL for the web service.
