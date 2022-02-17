@@ -10,7 +10,6 @@ const cors = require("cors");
 require("dotenv").config({ path: "./config.env" });
 
 
-
 // set default port
 const port = process.env.PORT || 5000;
 
@@ -23,23 +22,12 @@ app.use(express.json());
 app.use(require("./routes"));
 
 
-// get driver connection
-//const dbo = require("./db/conn");
+// init db connection 
 const mong = require("./db/init");
 
 
 // initialize app entry
 app.listen(port, () => {
 
-
     mong.init_db();
-
-    // // test db connection
-    // dbo.connectToServer(function (err) {
-    //     if (err) {          
-    //         console.error(err);
-    //     }   
-    // });
-
-    // console.log("Server is running on port: " + port);
 });

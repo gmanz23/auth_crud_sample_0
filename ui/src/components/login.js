@@ -1,27 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
+import AuthService from "../services/auth.service";
 
-//import Form from "react-validation/build/form";
-// import Input from "react-validation/build/input";
-// import CheckButton from "react-validation/build/button";
-
-import AuthService from "../../services/auth.service";
-
-import "./login.css"
-
-// async function loginUser(credentials) {
-
-//     return fetch('http://localhost:5000/login', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(credentials)
-//     }).then(data => data.json());
-// }
-
-export default function Login({ setToken }) {
+export default function Login() {
 
     const navigate = useNavigate();
 
@@ -29,25 +11,19 @@ export default function Login({ setToken }) {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
     const [message, setMessage] = useState();
-    //const [isLoading, setIsLoading] = useState(false)
 
-    // const buttonHandler = () => {
-    //     setIsLoading(current => !current)
-    // }
-
+    // login submit function
     const handleSubmit = async e => {
         e.preventDefault();
 
-        const token = await AuthService.login(username,password);
-
-        
+        const token = await AuthService.login(username,password);       
 
         if (token.error) {
             // set error message
             setMessage(token.error);
         }
         else {
-
+            
             AuthService.setToken(token);
 
             // remember previous location - for now send to posts
@@ -56,13 +32,10 @@ export default function Login({ setToken }) {
         }
     }
 
-
-
-  return(
-  
+  return(  
     <div className="col">
         <div className="card card-container">
-            <img src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="profile-img" className="profile-img-card"/>
+            <img src="/logo192.png" alt="profile-img" className="profile-img-card"/>
 
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
@@ -96,7 +69,3 @@ export default function Login({ setToken }) {
     </div>
   )
 }
-
-// Login.propTypes = {
-//     setToken: PropTypes.func.isRequired
-//   };

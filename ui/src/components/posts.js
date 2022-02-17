@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
-
 import { format, parseISO } from "date-fns";
 
 import PostService from "../services/post.service"; 
@@ -32,7 +29,6 @@ export default function Posts() {
   
   const [posts, setPosts] = useState([]);
   
-  // This method fetches the records from the database.
   useEffect(() => {
 
     async function getPosts() {
@@ -50,7 +46,7 @@ export default function Posts() {
 
 
   
-  // This method will delete a record
+  
   async function likePost(id) {
     var res = await PostService.likePost(id)
 
@@ -65,7 +61,7 @@ export default function Posts() {
     setPosts(posts);
   }
   
-  // This method will map out the records on the table
+  // map posts 
   function postsList() {
     return posts.map((post) => {
       return (
@@ -78,7 +74,7 @@ export default function Posts() {
     });
   }
   
-  // This following section will display the table with the records of individuals.
+  // container for posts page
   return (
     <div>
       <div className="col">

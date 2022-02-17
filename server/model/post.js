@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
 
-var PostLikes = require('./post_likes');
-
 var Schema = mongoose.Schema;
 
 

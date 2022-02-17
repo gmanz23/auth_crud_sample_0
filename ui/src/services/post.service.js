@@ -1,7 +1,4 @@
-import authHeader from './auth-header';
 import AuthService from "./auth.service";
-
-
 
 const user = AuthService.getCurrentUser();
 
@@ -13,8 +10,7 @@ class PostService {
             response => 
             response.json())
         .catch(err => {
-            // Do something for an error here
-            console.log("Error Reading data " + err);
+            console.log("Error reading posts: " + err);
         });
     }
 
@@ -30,13 +26,9 @@ class PostService {
             response => 
             response.json())
         .catch(err => {
-            // Do something for an error here
-            console.log("Error Reading data " + err);
+            console.log("Error liking post: " + err);
         });
-
-
     }
-
 }
 
 export default new PostService();

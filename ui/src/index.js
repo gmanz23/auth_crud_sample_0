@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 
 
 
-window.$apiURL = 'http://localhost:5000/' //global variable
+window.$apiURL = 'http://localhost:5000/'
 
 ReactDOM.render(
     <React.StrictMode>
