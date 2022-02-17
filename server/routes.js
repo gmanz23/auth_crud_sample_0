@@ -1,16 +1,19 @@
 const express = require("express");
 const jwt = require('jsonwebtoken');
 
+const mongoose = require('mongoose');
+
+//const mong = require("../models");
+const User = require('./model/user');
+const Post = require('./model/post');
+
+
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
 // The router will be added as a middleware and will take control of requests starting with path /record.
-const recordRoutes = express.Router();
+const routes = express.Router();
 
-// This will help us connect to the database
-const dbo = require("../db/conn");
 
-// This help convert the id from string to ObjectId for the _id.
-const ObjectId = require("mongodb").ObjectId;
 
 
 function generateAccessToken(username) {
@@ -20,12 +23,12 @@ function generateAccessToken(username) {
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['x-access-token']
-  const token = authHeader // && authHeader.split(' ')[1]
+  const token = authHeader
 
   if (token == null) return res.sendStatus(401)
 
   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-    console.log(err)
+    //console.log(err)
 
     if (err) return res.sendStatus(403)
 
@@ -37,7 +40,7 @@ function authenticateToken(req, res, next) {
 
 
 
-recordRoutes.route("/auth").post(function (req, res) {
+routes.route("/auth").post(function (req, res) {
   
   var username = req.body.username;
   var pass = req.body.password;
@@ -49,18 +52,25 @@ recordRoutes.route("/auth").post(function (req, res) {
 });
 
 
-recordRoutes.route("/posts").get(authenticateToken, function (req, res) {
+routes.route("/posts").get(authenticateToken, function (req, res) {
   
+  Post.find({})
+  .populate('user')
+  .exec(function (err, posts) {
+    if (err) return handleError(err);
+    res.json(posts);
+  });
 
-  let db_connect = dbo.getDb();
 
-  db_connect.collection("posts").find({}).toArray(function (err, result) {
-      if (err) throw err;
+  // .then(function (posts) {
+  //   res.json(posts);
+  // }).catch(function(err) {
+  //   res.json(err);
+  // });
 
-      res.json(result);
-    });
+
   
 });
 
 
-module.exports = recordRoutes;
+module.exports = routes;

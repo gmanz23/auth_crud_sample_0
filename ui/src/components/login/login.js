@@ -29,7 +29,7 @@ export default function Login({ setToken }) {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
     const [message, setMessage] = useState();
-    const [isLoading, setIsLoading] = useState(false)
+    //const [isLoading, setIsLoading] = useState(false)
 
     // const buttonHandler = () => {
     //     setIsLoading(current => !current)

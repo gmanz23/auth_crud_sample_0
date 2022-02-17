@@ -2,18 +2,27 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
+import { format, parseISO } from "date-fns";
+
 import PostService from "../services/post.service"; 
 
 
 const Post = (props) => (
-  <tr>
-      <td>{props.post.postid}</td>
-      <td>{props.post.dateposted}</td>
-      <td>{props.post.post_content}</td>            
-      <td>
-        <button className="btn btn-link">Like</button>
-      </td>
-  </tr>
+
+  <div className="card" style={{ display: 'block'}}>
+    <div className="card-body">
+      <h5>{props.post.user.username}</h5>
+        <cite>{format(parseISO(props.post.dateposted), "MM/dd/yyyy hh:mm aaaaa'm'")}</cite>
+        <br/>
+        <br/>
+      <p className="card-text">{props.post.post_content}</p>
+      <div className="row">
+        <div style={{ margin: 'auto'}} className="col"><p>{props.post.likes} Likes</p></div>
+        <div className="col"><a href="#" className="btn btn-primary float-end">Like</a></div>
+      </div>
+      
+    </div>
+  </div>
  );
 
 
@@ -76,18 +85,11 @@ export default function Posts() {
   // This following section will display the table with the records of individuals.
   return (
     <div>
-      <h3>Post List</h3>
-      <table className="table table-striped" style={{ marginTop: 20 }}>
-        <thead>
-          <tr>
-            <th>Post ID</th>
-            <th>Date</th>
-            <th>Content</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>{postsList()}</tbody>
-      </table>
+      <div className="col">
+        <div className="card-container">
+          {postsList()}
+        </div>
+      </div>
     </div>
   );
  }
