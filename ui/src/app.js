@@ -15,21 +15,7 @@ import "./components/app/app.css";
 
 const App = () => {   
 
-    //const [currentUser, setCurrentUser] = useState();   
-
-    // useEffect(() => {
-    //     const user = AuthService.getCurrentUser();
-
-    //     if (user) { setCurrentUser(user); }
-        
-    // });
-
     const user = AuthService.getCurrentUser();
-
-    // const logout = () => {                
-    //     AuthService.logout();
-    // }
-
 
     if(!user) {
         return <Login />
@@ -37,7 +23,7 @@ const App = () => {
 
     return (
         <div>            
-            <div className="container mt-3">
+            <div className="container">
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/posts" element={<Posts />} />

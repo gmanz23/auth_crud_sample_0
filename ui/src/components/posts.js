@@ -17,10 +17,12 @@ const Post = (props) => (
         <br/>
       <p className="card-text">{props.post.post_content}</p>
       <div className="row">
-        <div style={{ margin: 'auto'}} className="col"><p>{props.post.likes} Likes</p></div>
-        <div className="col"><a href="#" className="btn btn-primary float-end">Like</a></div>
-      </div>
-      
+        <div style={{ margin: 'auto'}} className="col"><p>{props.post.likeCount} Likes</p></div>
+        <div className="col">
+          <a className="btn btn-primary float-end"
+            onClick={() => {props.likePost(props.post._id);}}>Like</a>
+        </div>
+      </div>      
     </div>
   </div>
  );
@@ -33,19 +35,8 @@ export default function Posts() {
   // This method fetches the records from the database.
   useEffect(() => {
 
-    // const getPosts = async e => {
-    //   e.preventDefault();
-
-    //   const token = await AuthService.login(username,password);
-
-    //   // validate token // display error message (setMessage)
-
-    //   AuthService.setToken(token);
-    //   //setIsLoading(false)
-    // }
-
     async function getPosts() {
-      const posts = await PostService.getPosts();
+      var posts = await PostService.getPosts();
   
       // check for errors // display errors
         
@@ -59,15 +50,20 @@ export default function Posts() {
 
 
   
-  // // This method will delete a record
-  // async function deleteRecord(id) {
-  //   await fetch(`http://localhost:5000/${id}`, {
-  //     method: "DELETE"
-  //   });
+  // This method will delete a record
+  async function likePost(id) {
+    var res = await PostService.likePost(id)
+
+    if (res.error) { console.log(res.error); }
+
+    // check for errors // display errors
   
-  //   const newRecords = records.filter((el) => el._id !== id);
-  //   setRecords(newRecords);
-  // }
+    var posts = await PostService.getPosts();
+    
+    // check for errors // display errors
+
+    setPosts(posts);
+  }
   
   // This method will map out the records on the table
   function postsList() {
@@ -75,7 +71,7 @@ export default function Posts() {
       return (
         <Post
           post={post}
-          //deleteRecord={() => deleteRecord(record._id)}
+          likePost={() => likePost(post._id)}
           key={post._id}
         />
       );

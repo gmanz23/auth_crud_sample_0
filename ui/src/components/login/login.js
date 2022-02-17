@@ -40,75 +40,57 @@ export default function Login({ setToken }) {
 
         const token = await AuthService.login(username,password);
 
-        // validate token // display error message (setMessage)
+        
 
-        AuthService.setToken(token);
+        if (token.error) {
+            // set error message
+            setMessage(token.error);
+        }
+        else {
 
-        // remember previous location - for now send to posts
-        navigate("/posts");
-        window.location.reload();
-        //setIsLoading(false)
+            AuthService.setToken(token);
+
+            // remember previous location - for now send to posts
+            navigate("/posts");
+            window.location.reload();            
+        }
     }
 
 
 
   return(
-    // <div className="login-wrapper">
-    //     <h1>Please Log In</h1>
-    //     <form onSubmit={handleSubmit}>
-    //         <label>
-    //             <p>Username</p>
-    //             <input type="text" onChange={e => setUserName(e.target.value)} />
-    //         </label>
-    //         <label>
-    //             <p>Password</p>
-    //             <input type="password" onChange={e => setPassword(e.target.value)} />
-    //         </label>
-    //         <div>
-    //             <button type="submit">Submit</button>
-    //         </div>
-    //     </form>
-    // </div>
-
-    <div className="col-md-12">
+  
+    <div className="col">
         <div className="card card-container">
             <img src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="profile-img" className="profile-img-card"/>
 
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
+                <div className="mb-3">
                     <label htmlFor="username">Username</label>
                     <input type="text" className="form-control"
                         name="username"
                         onChange={e => setUserName(e.target.value)} />
                 </div>
-                <div className="form-group">
+                <div className="mb-3">
                     <label htmlFor="password">Password</label>
                     <input type="password" className="form-control"
                         name="password"
                         onChange={e => setPassword(e.target.value)} />
                 </div>
-                <div className="form-group">
-                    {/* <button type="submit" className="btn btn-primary btn-block" disabled={isLoading} onClick={buttonHandler}>  */}
-                    {/* <button type="submit" className="btn btn-primary btn-block" disabled={isLoading} onClick={buttonHandler} >
-                        {isLoading && (<span className="spinner-border spinner-border-sm"></span>)}
-                        <span>Login</span>
-                    </button> */}
-                    <br/>
-                    <button type="submit" className="btn btn-primary btn-block" >
+                <br/>
+                <div className="mb-3">                    
+                    <button type="submit" className="btn btn-primary" >
                         <span>Login</span>
                     </button>
                 </div>
-                
+                <br/>
                 {message && (
-                    <div className="form-group">
+                    <div className="mb-3">
                         <div className="alert alert-danger" role="alert">
                             {message}
                         </div>
                     </div>
                 )}
-                
-                {/* <CheckButton style={{ display: "none" }}
-                    ref={c => { this.checkBtn = c;}} /> */}
             </form>
         </div>
     </div>
